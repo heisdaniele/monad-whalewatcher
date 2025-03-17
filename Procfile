@@ -1,0 +1,1 @@
+worker: python blockchain_listener.py

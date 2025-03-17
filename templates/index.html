@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monad Whale Alert</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
+  <style>
+    * {
+      font-family: 'Fira Code', monospace;
+    }
+    body {
+      background-color: #2980b9;
+    }
+    .link-icon:hover {
+      filter: brightness(1.2);
+      transform: scale(1.1);
+    }
+    .link-icon {
+      transition: all 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.3s ease-out;
+    }
+    tr {
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body class="p-4 min-h-screen">
+  <!-- Header -->
+  <header class="mb-4">
+    <div class="flex items-center justify-between">
+      <div class="text-xl font-bold text-white">
+        Monad Whale Alert
+      </div>
+      
+      <!-- Hamburger Menu Button (visible on mobile) -->
+      <button 
+          class="sm:hidden p-2 text-white hover:bg-blue-700 rounded"
+          onclick="toggleMenu()"
+      >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+      </button>
+
+      <!-- Desktop Menu -->
+      <div class="hidden sm:block">
+          <button class="bg-gray-200 hover:bg-gray-300 text-black border-2 border-gray-400 rounded px-4 py-1">
+              Contact Us
+          </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden sm:hidden mt-2">
+      <button class="bg-gray-200 hover:bg-gray-300 text-black border-2 border-gray-400 rounded px-4 py-1 w-full text-left">
+          Contact Us
+      </button>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <div class="grid grid-cols-1 gap-4">
+      <div>
+          <!-- Panel Header -->
+          <div class="bg-[#4a69bd] text-white p-2 font-bold border-2 border-gray-400 rounded-t">
+              WhaleTransactions.exe
+          </div>
+          
+          <!-- Panel Content -->
+          <div class="bg-gray-200 border-x-2 border-b-2 border-gray-400 rounded-b">
+              <!-- Search Bar -->
+              <div class="p-3 bg-gray-300 border-b-2 border-gray-400">
+                  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                      <div class="font-bold">Whale Transactions</div>
+                      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
+                          <input
+                              type="search"
+                              placeholder="Search transactions..."
+                              class="bg-white border-2 border-gray-400 p-1 rounded w-full sm:w-64"
+                          />
+                          <button class="bg-gray-200 hover:bg-gray-300 text-black border-2 border-gray-400 rounded px-3 py-1 w-full sm:w-auto">
+                              Refresh
+                          </button>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- Transaction Table -->
+              <div class="overflow-auto max-h-[70vh]">
+                  <div class="min-w-[800px]">
+                      <table class="w-full">
+                          <thead>
+                              <tr class="bg-gray-300 border-b-2 border-gray-400 sticky top-0">
+                                  <th class="p-2 text-left">Amount</th>
+                                  <th class="p-2 text-left">Sender Address</th>
+                                  <th class="p-2 text-left">Receiver Address</th>
+                                  <th class="p-2 text-left">Transaction ID</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <!-- Real-time transactions will be inserted here -->
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+              
+              <!-- Table Footer -->
+              <div class="p-3 bg-gray-300 border-t-2 border-gray-400 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                  <div>
+                      <span class="font-bold">8</span> transactions displayed
+                  </div>
+                  <div class="text-sm">
+                      Auto-refreshes every 10 seconds
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Donation Section -->
+  <div class="flex flex-col sm:flex-row justify-center items-center gap-3 mt-4">
+      <button class="bg-gray-300 hover:bg-gray-400 text-black border-2 border-gray-400 rounded px-4 py-1">
+          Donate to
+      </button>
+      <div class="flex items-center gap-2">
+          <div class="bg-gray-200 border-2 border-gray-400 rounded p-1 px-3 text-sm">
+              0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+          </div>
+          <button 
+              class="bg-gray-300 hover:bg-gray-400 text-black border-2 border-gray-400 rounded p-1"
+              onclick="copyToClipboard('0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D')"
+              title="Copy to clipboard"
+          >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+              </svg>
+          </button>
+      </div>
+  </div>
+
+  <!-- Include Socket.IO client -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script>
+      // Helper function to truncate addresses
+      function truncateAddress(address) {
+          if (!address) return '';
+          return address.length > 10 ? address.substring(0, 6) + '...' + address.substring(address.length - 4) : address;
+      }
+
+      // Connect to the Socket.IO server
+      const socket = io('http://localhost:5000', {
+          transports: ['websocket'],
+          upgrade: false,
+          reconnection: true,
+          reconnectionAttempts: 5,
+          reconnectionDelay: 1000
+      });
+      
+      // Set to track processed transactions and avoid duplicates.
+      const processedTxs = new Set();
+
+      socket.on('connect', () => {
+          console.log('Connected to WebSocket server');
+          document.querySelector('tbody').innerHTML = ''; // Clear existing rows
+          processedTxs.clear();
+      });
+
+      socket.on('connect_error', (error) => {
+          console.error('Connection error:', error);
+      });
+
+      socket.on('disconnect', () => {
+          console.log('Disconnected from WebSocket server');
+      });
+
+      // Listen for new transaction events.
+      socket.on('new_transaction', (tx) => {
+          if (!tx || !tx.tx_hash || processedTxs.has(tx.tx_hash)) {
+              console.log('Skipping invalid or duplicate transaction:', tx?.tx_hash);
+              return;
+          }
+          
+          try {
+              processedTxs.add(tx.tx_hash);
+              const tbody = document.querySelector('tbody');
+              
+              // Create a new table row for the transaction.
+              const tr = document.createElement('tr');
+              tr.className = 'border-b border-gray-400 hover:bg-gray-300 animate-fade-in';
+              
+              // Format amount and transaction hash.
+              const amount = parseFloat(tx.amount).toFixed(2);
+              const txHash = tx.tx_hash.startsWith('0x') ? tx.tx_hash : `0x${tx.tx_hash}`;
+              const explorerUrl = `https://testnet.monadexplorer.com/tx/${txHash}`;
+              
+              tr.innerHTML = `
+                  <td class="p-2">
+                      <div class="bg-gray-300 border-2 border-gray-400 p-1 rounded text-center">
+                          ${amount} MON
+                      </div>
+                  </td>
+                  <td class="p-2 text-sm" onclick="copyToClipboard('${tx.from_addr}')" style="cursor: pointer" title="Click to copy: ${tx.from_addr}">
+                      ${truncateAddress(tx.from_addr)}
+                  </td>
+                  <td class="p-2 text-sm" onclick="copyToClipboard('${tx.to_addr}')" style="cursor: pointer" title="Click to copy: ${tx.to_addr}">
+                      ${truncateAddress(tx.to_addr)}
+                  </td>
+                  <td class="p-2 text-sm flex items-center gap-2">
+                      <span onclick="copyToClipboard('${txHash}')" style="cursor: pointer" title="Click to copy: ${txHash}">
+                          ${truncateAddress(txHash)}
+                      </span>
+                      <a href="${explorerUrl}" 
+                         target="_blank" 
+                         rel="noopener noreferrer" 
+                         class="link-icon" 
+                         title="View on Monad Explorer">
+                          <svg class="h-5 w-5 bg-gray-300 border-2 border-gray-400 rounded p-0.5 hover:bg-gray-400" 
+                               viewBox="0 0 24 24" 
+                               fill="none" 
+                               stroke="currentColor" 
+                               stroke-width="2" 
+                               stroke-linecap="round" 
+                               stroke-linejoin="round">
+                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                              <polyline points="15 3 21 3 21 9"></polyline>
+                              <line x1="10" y1="14" x2="21" y2="3"></line>
+                          </svg>
+                      </a>
+                  </td>
+              `;
+              
+              // Animate the row and insert at the top.
+              tr.style.opacity = '0';
+              tr.style.transform = 'translateY(-20px)';
+              tbody.insertBefore(tr, tbody.firstChild);
+              requestAnimationFrame(() => {
+                  tr.style.transition = 'all 0.3s ease';
+                  tr.style.opacity = '1';
+                  tr.style.transform = 'translateY(0)';
+              });
+              
+              // If more than 8 rows exist, remove the oldest row.
+              if (tbody.children.length > 8) {
+                  const lastRow = tbody.lastChild;
+                  lastRow.style.opacity = '0';
+                  lastRow.style.transform = 'translateY(20px)';
+                  setTimeout(() => tbody.removeChild(lastRow), 300);
+              }
+              
+              // Update the transaction counter.
+              const countEl = document.querySelector('.font-bold');
+              countEl.textContent = Math.min(tbody.children.length, 8);
+              
+          } catch (error) {
+              console.error('Error processing transaction:', error);
+          }
+      });
+
+      // Function to copy text to the clipboard with a temporary notification.
+      function copyToClipboard(text) {
+          navigator.clipboard.writeText(text)
+              .then(() => {
+                  const toast = document.createElement('div');
+                  toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg';
+                  toast.textContent = 'Copied to clipboard!';
+                  document.body.appendChild(toast);
+                  setTimeout(() => {
+                      toast.style.opacity = '0';
+                      setTimeout(() => document.body.removeChild(toast), 300);
+                  }, 2000);
+              })
+              .catch(err => console.error('Copy failed:', err));
+      }
+
+      // Search functionality for filtering transactions.
+      const searchInput = document.querySelector('input[type="search"]');
+      searchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase();
+          const rows = document.querySelectorAll('tbody tr');
+          rows.forEach(row => {
+              const text = row.textContent.toLowerCase();
+              row.style.display = text.includes(query) ? '' : 'none';
+          });
+      });
+
+      // Mobile menu toggle.
+      let menuOpen = false;
+      function toggleMenu() {
+          menuOpen = !menuOpen;
+          const menu = document.getElementById('mobileMenu');
+          menu.classList.toggle('hidden', !menuOpen);
+      }
+  </script>
+</body>
+</html>
