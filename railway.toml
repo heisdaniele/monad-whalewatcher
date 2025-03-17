@@ -1,8 +1,0 @@
-[build]
-builder = "nixpacks"
-buildCommand = "pip install -r requirements.txt"
-
-[deploy]
-startCommand = "python blockchain_listener.py"
-healthcheckPath = "/"
-restartPolicyType = "on_failure"
