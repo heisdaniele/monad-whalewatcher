@@ -1,10 +1,33 @@
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+
+# Virtual Environment
 .env
-.venv
+.venv/
 env/
 venv/
+ENV/
+
+# IDE
 .idea/
 .vscode/
+*.swp
+*.swo
+
+# Logs
 *.log
+logs/
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Distribution/packaging
+dist/
+build/
+*.egg-info/
+.eggs/
